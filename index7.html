@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Alejandría pero Online</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f3d77b;
+            --dark: #080808;
+            --dark-2: #111111;
+            --dark-3: #181818;
+            --text: #f5f5f5;
+            --muted: #a9a9a9;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top, rgba(212,175,55,.08), transparent 35%),
+                #080808;
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+        }
+
+        h1, h2, h3, h4, .brand {
+            font-family: "Cinzel", serif;
+        }
+
+        .text-gold {
+            color: var(--gold);
+        }
+
+        .navbar {
+            background: rgba(5,5,5,.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212,175,55,.25);
+        }
+
+        .brand {
+            color: var(--gold) !important;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: #ddd !important;
+            transition: .25s;
+        }
+
+        .nav-link:hover {
+            color: var(--gold) !important;
+        }
+
+        .hero {
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(90deg, rgba(0,0,0,.94), rgba(0,0,0,.75), rgba(0,0,0,.25)),
+                url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1800&q=90")
+                center/cover;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 80% 40%, rgba(212,175,55,.15), transparent 30%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 7vw, 6rem);
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .hero-subtitle {
+            color: var(--gold-light);
+            font-size: 1.15rem;
+            letter-spacing: 2px;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: #111;
+            border: none;
+            font-weight: 700;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 35px;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: var(--gold);
+            left: 20%;
+            bottom: -12px;
+            border-radius: 20px;
+        }
+
+        .category-title {
+            color: var(--gold);
+            border-left: 4px solid var(--gold);
+            padding-left: 14px;
+            margin-top: 60px;
+            margin-bottom: 25px;
+        }
+
+        .book-card {
+            background: linear-gradient(145deg, #151515, #0d0d0d);
+            border: 1px solid rgba(212,175,55,.16);
+            border-radius: 18px;
+            overflow: hidden;
+            height: 100%;
+            transition: .3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,.35);
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212,175,55,.65);
+            box-shadow: 0 15px 40px rgba(212,175,55,.12);
+        }
+
+        .book-image-container {
+            height: 330px;
+            background: #202020;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .4s ease;
+        }
+
+        .book-card:hover .book-image {
+            transform: scale(1.04);
+        }
+
+        .badge-new {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--gold);
+            color: #111;
+            font-weight: 800;
+            z-index: 2;
+        }
+
+        .discount {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #b21f1f;
+            color: white;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .book-body {
+            padding: 20px;
+        }
+
+        .book-title {
+            min-height: 55px;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .book-author {
+            color: var(--muted);
+            font-size: .9rem;
+        }
+
+        .price {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--gold-light);
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #777;
+            font-size: .9rem;
+        }
+
+        .filter-box {
+            background: #111;
+            border: 1px solid rgba(212,175,55,.2);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .form-control,
+        .form-select {
+            background-color: #191919 !important;
+            color: white !important;
+            border-color: #333 !important;
+        }
+
+        .form-control::placeholder {
+            color: #777;
+        }
+
+        .form-select option {
+            background: #191919;
+            color: white;
+        }
+
+        .modal-content {
+            background: #121212;
+            color: white;
+            border: 1px solid rgba(212,175,55,.35);
+        }
+
+        .modal-header,
+        .modal-footer {
+            border-color: #333;
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+
+        .faq .accordion-item {
+            background: #121212;
+            color: white;
+            border: 1px solid #2b2b2b;
+            margin-bottom: 10px;
+            border-radius: 12px !important;
+            overflow: hidden;
+        }
+
+        .accordion-button {
+            background: #151515;
+            color: white;
+            font-weight: 600;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: #1d1d1d;
+            color: var(--gold-light);
+            box-shadow: none;
+        }
+
+        .accordion-button::after {
+            filter: invert(1);
+        }
+
+        .cart-panel {
+            background: #111;
+            border: 1px solid rgba(212,175,55,.3);
+            border-radius: 18px;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #292929;
+            padding: 15px 0;
+        }
+
+        .review-card {
+            background: #121212;
+            border: 1px solid #282828;
+            border-radius: 18px;
+            padding: 25px;
+            height: 100%;
+        }
+
+        .stars {
+            color: var(--gold);
+        }
+
+        footer {
+            background: #050505;
+            border-top: 1px solid rgba(212,175,55,.2);
+        }
+
+        .social-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #333;
+            border-radius: 50%;
+            color: var(--gold);
+            text-decoration: none;
+            transition: .25s;
+        }
+
+        .social-icon:hover {
+            background: var(--gold);
+            color: #111;
+        }
+
+        @media (max-width: 767px) {
+            .hero {
+                min-height: 520px;
+            }
+
+            .book-image-container {
+                height: 360px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container py-2">
+
+        <a class="navbar-brand brand" href="#">
+            <i class="bi bi-book-half me-2"></i>
+            Alejandría pero Online
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#yuri">Yuri</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#yaoi">Yaoi</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#infantiles">Infantiles</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#ficcion">Ficción</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#comics">Comics</a>
+                </li>
+
+                <li class="nav-item ms-lg-3">
+                    <button class="btn btn-gold"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#cartCanvas">
+                        <i class="bi bi-cart3"></i>
+                        Carrito
+                        <span id="cartCount" class="badge text-bg-dark">0</span>
+                    </button>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- HERO -->
+<header class="hero">
+    <div class="container hero-content">
+
+        <div class="row">
+            <div class="col-lg-7">
+
+                <p class="hero-subtitle fw-bold mb-3">
+                    NO TODO SE PERDIÓ EN ALEJANDRÍA
+                </p>
+
+                <h1 class="mb-4">
+                    Alejandría
+                    <span class="text-gold">pero Online</span>
+                </h1>
+
+                <p class="lead text-light mb-4">
+                    Una biblioteca digital donde mangas, novelas,
+                    clásicos y cómics encuentran un nuevo hogar.
+                </p>
+
+                <a href="#catalogo" class="btn btn-gold btn-lg px-4">
+                    <i class="bi bi-book me-2"></i>
+                    Explorar catálogo
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</header>
+
+
+<!-- CATALOGO -->
+<main id="catalogo" class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="section-title">
+            Nuestro catálogo
+        </h2>
+
+        <p class="text-secondary">
+            Encuentra tu próxima historia favorita.
+        </p>
+    </div>
+
+
+    <!-- FILTROS -->
+    <div class="filter-box mb-5">
+
+        <div class="row g-3">
+
+            <div class="col-lg-5">
+                <label class="form-label">Buscar</label>
+
+                <div class="input-group">
+                    <span class="input-group-text bg-dark text-gold border-secondary">
+                        <i class="bi bi-search"></i>
+                    </span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="form-control"
+                        placeholder="Busca un libro, manga o cómic..."
+                    >
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <label class="form-label">Categoría</label>
+
+                <select id="categoryFilter" class="form-select">
+                    <option value="all">Todas</option>
+                    <option value="Yuri">Yuri</option>
+                    <option value="Yaoi">Yaoi</option>
+                    <option value="Infantiles">Infantiles</option>
+                    <option value="Ficción">Ficción</option>
+                    <option value="Comics">Comics</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2">
+                <label class="form-label">Ordenar</label>
+
+                <select id="sortFilter" class="form-select">
+                    <option value="default">Predeterminado</option>
+                    <option value="priceAsc">Precio menor</option>
+                    <option value="priceDesc">Precio mayor</option>
+                    <option value="name">Nombre</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 d-flex align-items-end">
+                <button
+                    id="resetFilters"
+                    class="btn btn-outline-light w-100">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    Limpiar
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="catalogContainer"></div>
+
+</main>
+
+
+<!-- FAQ -->
+<section class="faq container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="section-title">Preguntas frecuentes</h2>
+    </div>
+
+    <div class="accordion" id="faqAccordion">
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq1">
+                    ¿Los libros son físicos?
+                </button>
+            </h2>
+
+            <div id="faq1"
+                 class="accordion-collapse collapse show"
+                 data-bs-parent="#faqAccordion">
+
+                <div class="accordion-body text-secondary">
+                    Sí. El catálogo representa libros, mangas y cómics físicos.
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq2">
+                    ¿Los precios están en soles?
+                </button>
+            </h2>
+
+            <div id="faq2"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#faqAccordion">
+
+                <div class="accordion-body text-secondary">
+                    Sí. Los precios mostrados son aproximaciones en soles peruanos.
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq3">
+                    ¿Puedo conocer más detalles de un libro?
+                </button>
+            </h2>
+
+            <div id="faq3"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#faqAccordion">
+
+                <div class="accordion-body text-secondary">
+                    Sí. Pulsa "Ver detalles" para consultar argumento,
+                    autor, idiomas, dimensiones, ISBN y formato.
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq4">
+                    ¿Puedo añadir varios libros al carrito?
+                </button>
+            </h2>
+
+            <div id="faq4"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#faqAccordion">
+
+                <div class="accordion-body text-secondary">
+                    Sí. Puedes añadir diferentes productos y modificar
+                    sus cantidades desde el carrito.
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#faq5">
+                    ¿El pago está habilitado?
+                </button>
+            </h2>
+
+            <div id="faq5"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#faqAccordion">
+
+                <div class="accordion-body text-secondary">
+                    No. La demostración se detiene antes de realizar
+                    un pago real.
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RESEÑAS -->
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="section-title">Lo que dicen nuestros lectores</h2>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="review-card">
+                <div class="stars mb-3">
+                    ★★★★★
+                </div>
+
+                <p>
+                    "Encontré varios mangas que llevaba tiempo buscando.
+                    La página se siente como una biblioteca moderna."
+                </p>
+
+                <small class="text-secondary">
+                    — Valeria M.
+                </small>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="review-card">
+                <div class="stars mb-3">
+                    ★★★★★
+                </div>
+
+                <p>
+                    "Me gusta poder revisar la información del libro
+                    antes de añadirlo al carrito."
+                </p>
+
+                <small class="text-secondary">
+                    — Diego R.
+                </small>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="review-card">
+                <div class="stars mb-3">
+                    ★★★★★
+                </div>
+
+                <p>
+                    "La sección de cómics está buenísima."
+                </p>
+
+                <small class="text-secondary">
+                    — Martín C.
+                </small>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACTO -->
+<section class="container py-5">
+
+    <div class="row g-4">
+
+        <div class="col-lg-6">
+
+            <h2 class="text-gold mb-4">
+                Contáctanos
+            </h2>
+
+            <p class="text-secondary">
+                ¿Tienes alguna pregunta sobre nuestro catálogo?
+                Escríbenos.
+            </p>
+
+            <p>
+                <i class="bi bi-geo-alt-fill text-gold me-2"></i>
+                Jr. de la Unión 850, Centro de Lima, Perú
+            </p>
+
+            <p>
+                <i class="bi bi-whatsapp text-gold me-2"></i>
+                +51 666 679 123
+            </p>
+
+            <div class="d-flex gap-2 mt-4">
+
+                <a href="#" class="social-icon">
+                    <i class="bi bi-instagram"></i>
+                </a>
+
+                <a href="#" class="social-icon">
+                    <i class="bi bi-facebook"></i>
+                </a>
+
+                <a href="#" class="social-icon">
+                    <i class="bi bi-tiktok"></i>
+                </a>
+
+                <a href="#" class="social-icon">
+                    <i class="bi bi-twitter-x"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-6">
+
+            <div class="filter-box">
+
+                <h4 class="mb-4">
+                    <i class="bi bi-envelope text-gold me-2"></i>
+                    Escríbenos
+                </h4>
+
+                <input
+                    type="text"
+                    class="form-control mb-3"
+                    placeholder="Tu nombre"
+                >
+
+                <input
+                    type="email"
+                    class="form-control mb-3"
+                    placeholder="Tu correo"
+                >
+
+                <textarea
+                    class="form-control mb-3"
+                    rows="5"
+                    placeholder="Mensaje"></textarea>
+
+                <button class="btn btn-gold w-100">
+                    Enviar mensaje
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MODAL PRODUCTO -->
+<div class="modal fade" id="productModal" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 id="modalTitle" class="modal-title text-gold">
+                    Producto
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row g-4">
+
+                    <div class="col-md-5">
+
+                        <img
+                            id="modalImage"
+                            class="img-fluid rounded-4 shadow"
+                            style="width:100%; max-height:500px; object-fit:cover;"
+                            alt="Portada"
+                        >
+
+                    </div>
+
+                    <div class="col-md-7">
+
+                        <p id="modalPlot" class="text-secondary"></p>
+
+                        <hr>
+
+                        <p>
+                            <strong>Autor:</strong>
+                            <span id="modalAuthor"></span>
+                        </p>
+
+                        <p>
+                            <strong>Idiomas:</strong>
+                            <span id="modalLanguages"></span>
+                        </p>
+
+                        <p>
+                            <strong>Dimensiones:</strong>
+                            <span id="modalDimensions"></span>
+                        </p>
+
+                        <p>
+                            <strong>ISBN:</strong>
+                            <span id="modalISBN"></span>
+                        </p>
+
+                        <p>
+                            <strong>Formato:</strong>
+                            <span id="modalFormat"></span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    id="modalAddButton"
+                    class="btn btn-gold">
+                    <i class="bi bi-cart-plus me-2"></i>
+                    Añadir al carrito
+                </button>
+
+                <button
+                    class="btn btn-outline-light"
+                    data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CARRITO -->
+<div class="offcanvas offcanvas-end text-bg-dark"
+     tabindex="-1"
+     id="cartCanvas">
+
+    <div class="offcanvas-header border-bottom">
+
+        <h5 class="offcanvas-title">
+            <i class="bi bi-cart3 text-gold me-2"></i>
+            Tu carrito
+        </h5>
+
+        <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas">
+        </button>
+
+    </div>
+
+    <div class="offcanvas-body">
+
+        <div id="cartItems"></div>
+
+        <hr>
+
+        <div class="d-flex justify-content-between mb-3">
+
+            <strong>Total:</strong>
+
+            <strong id="cartTotal" class="text-gold">
+                S/ 0.00
+            </strong>
+
+        </div>
+
+        <button
+            id="checkoutBtn"
+            class="btn btn-gold w-100 mb-2">
+            Continuar compra
+        </button>
+
+        <button
+            id="clearCart"
+            class="btn btn-outline-danger w-100">
+            Vaciar carrito
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer class="py-4 mt-5">
+
+    <div class="container text-center">
+
+        <p class="brand mb-2">
+            <i class="bi bi-book-half me-2"></i>
+            Alejandría pero Online
+        </p>
+
+        <p class="text-secondary mb-0">
+            No todo se perdió en Alejandría.
+        </p>
+
+        <small class="text-secondary">
+            © 2026 Alejandría pero Online
+        </small>
+
+    </div>
+
+</footer>
+
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+
+/* ============================================================
+   CATÁLOGO
+============================================================ */
+
+const books = [
+
+    /* =========================
+       YURI
+    ========================= */
+
+    {
+        id: 1,
+        title: "El chico que me gusta no es un chico",
+        category: "Yuri",
+        author: "Sumiko Arai",
+        price: 49.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoR6UZtP9YVFjPIwxiKvU5cWiFa1ndxe5KQDdeSYqkSw&s=10",
+        plot: "Una historia juvenil sobre sentimientos, identidad y la relación entre dos chicas que descubren que sus emociones son mucho más profundas de lo que imaginaban.",
+        languages: "Español",
+        dimensions: "18 x 13 cm",
+        isbn: "9788410515895",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 2,
+        title: "Bloom into You Vol. 1",
+        category: "Yuri",
+        author: "Nio Nakatani",
+        price: 45.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0dbBZfsfvWKmpnMaBv9s9I31M3EFrY7jlCHSpTZZ11A&s=10",
+        plot: "Yuu Koito siempre ha esperado sentir mariposas al recibir una confesión, pero cuando finalmente sucede, no siente nada. Todo cambia cuando conoce a Touko Nanami.",
+        languages: "Español / Japonés",
+        dimensions: "18 x 13 cm",
+        isbn: "9788491736684",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 3,
+        title: "Citrus Vol. 1",
+        category: "Yuri",
+        author: "Saburouta",
+        price: 42.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwWnVlEqxPjq_POYmpARCQYjif_YfNodSYi_9KhtFvww&s=10",
+        plot: "Yuzu comienza una nueva vida escolar y descubre que su estricta hermanastra Mei será una parte importante de su vida.",
+        languages: "Español / Japonés",
+        dimensions: "18 x 13 cm",
+        isbn: "9788416660674",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 4,
+        title: "Adachi y Shimamura Vol. 1",
+        category: "Yuri",
+        author: "Hitoma Iruma",
+        price: 47.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrJle5tQlpvq8i64Oonp5LpEs3dqkAXU7ncTfAJmiAXA&s=10",
+        plot: "Adachi y Shimamura se conocen casualmente en el segundo piso del gimnasio de su escuela. Poco a poco, su amistad comienza a convertirse en algo diferente.",
+        languages: "Español / Japonés / Inglés",
+        dimensions: "18 x 13 cm",
+        isbn: "9781975320041",
+        format: "Tapa blanda"
+    },
+
+
+    /* =========================
+       YAOI
+    ========================= */
+
+    {
+        id: 5,
+        title: "Blue Lock Vol. 1",
+        category: "Yaoi",
+        author: "Muneyuki Kaneshiro / Yusuke Nomura",
+        price: 39.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNOYBG-1zmO8FDItzyNMflnDdn9ZhoCb1azv7HJJ0R5w&s=10",
+        plot: "Tras una propuesta radical para encontrar al delantero definitivo de Japón, cientos de jóvenes futbolistas entran en el proyecto Blue Lock.",
+        languages: "Español / Japonés",
+        dimensions: "18 x 13 cm",
+        isbn: "9788411123747",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 6,
+        title: "Haikyuu!! Vol. 1",
+        category: "Yaoi",
+        author: "Haruichi Furudate",
+        price: 39.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf404ctI9i-bbFMCH3jNX1lukSqq3rL5s-jB_lsbQOXQ&s=10",
+        plot: "Hinata Shoyo descubre su pasión por el voleibol y decide convertirse en un gran jugador a pesar de su baja estatura.",
+        languages: "Español / Japonés",
+        dimensions: "18 x 13 cm",
+        isbn: "9788418187260",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 7,
+        title: "Ten Count Vol. 1",
+        category: "Yaoi",
+        author: "Rihito Takarai",
+        price: 44.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGrwZYB9DDPCHtbGBKxY_nGqo0s_6LReTMi4FRHZKzrQ&s=10",
+        plot: "Shirotani conoce a Kurose, un terapeuta que intenta ayudarlo con sus problemas de ansiedad y compulsiones.",
+        languages: "Español / Japonés",
+        dimensions: "18 x 13 cm",
+        isbn: "9788417179790",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 8,
+        title: "Given Vol. 1",
+        category: "Yaoi",
+        author: "Natsuki Kizu",
+        price: 43.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhQ5YtxZ_GxDTQafIXdxwDAuMa0g26v_ztqQ-E_NiFjw&s=10",
+        plot: "Uenoyama pierde poco a poco el interés por la música hasta que conoce a Mafuyu y escucha su misteriosa guitarra.",
+        languages: "Español / Japonés",
+        dimensions: "18 x 13 cm",
+        isbn: "9788417820268",
+        format: "Tapa blanda"
+    },
+
+
+    /* =========================
+       INFANTILES
+    ========================= */
+
+    {
+        id: 9,
+        title: "Paco Yunque",
+        category: "Infantiles",
+        author: "César Vallejo",
+        price: 29.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPz_DSxYcDLmiuW_NDe5XxW1SnlvYyUgbC1Zs9VXiPiw&s=10",
+        plot: "Paco Yunque llega por primera vez a la escuela y debe enfrentarse a las diferencias sociales y a los abusos de sus compañeros.",
+        languages: "Español",
+        dimensions: "20 x 13 cm",
+        isbn: "9786123040958",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 10,
+        title: "El Principito",
+        category: "Infantiles",
+        author: "Antoine de Saint-Exupéry",
+        price: 32.90,
+        image: "https://comicstores.es/imagenes/9788498/978849838149.webp",
+        plot: "Un piloto conoce a un pequeño príncipe proveniente de otro planeta que le cuenta sus aventuras y reflexiones sobre la vida.",
+        languages: "Español / Francés",
+        dimensions: "20 x 13 cm",
+        isbn: "9788498381494",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 11,
+        title: "Pinocho",
+        category: "Infantiles",
+        author: "Carlo Collodi",
+        price: 27.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqUrJrpICWyBKlDLxe1BrZBCe3Ic6cuuglzndxbqZ_aA&s=10",
+        plot: "La historia del títere de madera que sueña con convertirse en un niño de verdad y aprende las consecuencias de sus decisiones.",
+        languages: "Español / Italiano",
+        dimensions: "20 x 13 cm",
+        isbn: "9788428547024",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 12,
+        title: "El libro de la selva",
+        category: "Infantiles",
+        author: "Rudyard Kipling",
+        price: 31.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYKu_W2l0HaDp5WnAYu7lC7qcZl6c7yziSo_VXYjY_ZA&s=10",
+        plot: "Mowgli crece en la selva acompañado por animales que se convierten en su familia y aprende las leyes que gobiernan ese mundo.",
+        languages: "Español / Inglés",
+        dimensions: "20 x 13 cm",
+        isbn: "9788419547866",
+        format: "Tapa blanda"
+    },
+
+
+    /* =========================
+       FICCIÓN
+    ========================= */
+
+    {
+        id: 13,
+        title: "Harry Potter y la piedra filosofal",
+        category: "Ficción",
+        author: "J. K. Rowling",
+        price: 59.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-GrmNv5urx_u_Sg1NTnlhn7UI_55b3jPgkFlXC1C4zw&s=10",
+        plot: "Harry Potter descubre que es un mago y comienza sus estudios en Hogwarts, donde conoce a Ron y Hermione y se enfrenta a nuevos misterios.",
+        languages: "Español / Inglés",
+        dimensions: "22 x 14 cm",
+        isbn: "9788478884452",
+        format: "Tapa dura"
+    },
+
+    {
+        id: 14,
+        title: "Las Crónicas de Narnia 1: El sobrino del mago",
+        category: "Ficción",
+        author: "C. S. Lewis",
+        price: 54.90,
+        image: "https://covers.openlibrary.org/isbn/9789584238733-L.jpg",
+        plot: "Digory y Polly descubren mundos mágicos gracias a unos anillos creados por el tío de Digory, llegando finalmente al origen de Narnia.",
+        languages: "Español / Inglés",
+        dimensions: "21 x 14 cm",
+        isbn: "9789584238733",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 15,
+        title: "Juego de Tronos",
+        category: "Ficción",
+        author: "George R. R. Martin",
+        price: 69.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4X9SrHZyNdFTlZlhcUkdx3PEX_YPuoB-P-HetvsE44A&s=10",
+        plot: "En Westeros, varias familias nobles luchan por el poder mientras una amenaza antigua comienza a regresar desde el norte.",
+        languages: "Español / Inglés",
+        dimensions: "23 x 15 cm",
+        isbn: "9788401032427",
+        format: "Tapa blanda"
+    },
+
+    {
+        id: 16,
+        title: "Don Quijote de la Mancha",
+        category: "Ficción",
+        author: "Miguel de Cervantes",
+        price: 49.90,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP6CoCt18XFsjegOzbWGMHFQtKJbkFTJ39QEoYEF5twQ&s=10",
+        plot: "Alonso Quijano decide convertirse en caballero andante y emprende aventuras junto a su fiel escudero Sancho Panza.",
+        languages: "Español",
+        dimensions: "24 x 17 cm",
+        isbn: "9788466242851",
+        format: "Tapa blanda"
+    },
+
+
+    /* =========================
+       COMICS
+    ========================= */
+
+    {
+        id: 17,
+        title: "Batman: Año Uno",
+        category: "Comics",
+        author: "Frank Miller / David Mazzucchelli",
+        price: 81.75,
+        image: "https://comicstores.es/imagenes/9791370/979137058048.webp",
+        plot: "Bruce Wayne regresa a Gotham y comienza su transformación en Batman, mientras el joven James Gordon lucha contra la corrupción policial.",
+        languages: "Español / Inglés",
+        dimensions: "22.5 x 14.6 cm",
+        isbn: "9788418658167",
+        format: "Tapa dura"
+    },
+
+    {
+        id: 18,
+        title: "Spider-Man: Azul",
+        category: "Comics",
+        author: "Jeph Loeb / Tim Sale",
+        price: 79.90,
+        image: "https://comicstores.es/imagenes/9788411/978841101691.webp",
+        plot: "Peter Parker recuerda los primeros años de Spider-Man y su relación con Gwen Stacy en una historia marcada por la nostalgia.",
+        languages: "Español / Inglés",
+        dimensions: "26 x 17 cm",
+        isbn: "9788411016919",
+        format: "Tapa dura"
+    },
+
+    {
+        id: 19,
+        title: "The Sandman Vol. 1: Preludios y Nocturnos",
+        category: "Comics",
+        author: "Neil Gaiman",
+        price: 84.90,
+        image: "https://comicstores.es/imagenes/9791370/979137058067.webp",
+        plot: "Morpheus, el Rey de los Sueños, escapa después de décadas de cautiverio y comienza a recuperar los objetos que le fueron robados.",
+        languages: "Español / Inglés",
+        dimensions: "26 x 17 cm",
+        isbn: "9791370580674",
+        format: "Tapa dura"
+    },
+
+    {
+        id: 20,
+        title: "Green Lantern: Tierra Uno Vol. 1",
+        category: "Comics",
+        author: "Gabriel Hardman / Corinna Bechko",
+        price: 76.90,
+        image: "https://comicstores.es/imagenes/9788417/978841772244.webp",
+        plot: "Hal Jordan encuentra un misterioso anillo que lo lleva a descubrir una versión completamente diferente del universo de Green Lantern.",
+        languages: "Español / Inglés",
+        dimensions: "25.7 x 16.8 cm",
+        isbn: "9788417722449",
+        format: "Tapa dura"
+    }
+
+];
+
+
+/* ============================================================
+   DESCUENTOS ALEATORIOS
+============================================================ */
+
+books.forEach(book => {
+
+    book.discount =
+        Math.floor(Math.random() * 21) + 10;
+
+    book.finalPrice =
+        book.price -
+        (book.price * book.discount / 100);
+
+});
+
+
+/* ============================================================
+   DOS PRODUCTOS NUEVOS
+============================================================ */
+
+const shuffled = [...books].sort(() => Math.random() - .5);
+
+shuffled.slice(0, 2).forEach(book => {
+    book.new = true;
+});
+
+
+/* ============================================================
+   ESTADO
+============================================================ */
+
+let cart = [];
+
+let currentModalProduct = null;
+
+
+/* ============================================================
+   RENDER CATÁLOGO
+============================================================ */
+
+function renderCatalog() {
+
+    const container =
+        document.getElementById("catalogContainer");
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const category =
+        document
+        .getElementById("categoryFilter")
+        .value;
+
+    const sort =
+        document
+        .getElementById("sortFilter")
+        .value;
+
+
+    let filtered = books.filter(book => {
+
+        const matchesSearch =
+            book.title
+            .toLowerCase()
+            .includes(search) ||
+            book.author
+            .toLowerCase()
+            .includes(search);
+
+        const matchesCategory =
+            category === "all" ||
+            book.category === category;
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+
+    if (sort === "priceAsc") {
+
+        filtered.sort(
+            (a,b) => a.finalPrice - b.finalPrice
+        );
+
+    }
+
+    if (sort === "priceDesc") {
+
+        filtered.sort(
+            (a,b) => b.finalPrice - a.finalPrice
+        );
+
+    }
+
+    if (sort === "name") {
+
+        filtered.sort(
+            (a,b) =>
+                a.title.localeCompare(
+                    b.title,
+                    "es"
+                )
+        );
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (filtered.length === 0) {
+
+        container.innerHTML = `
+            <div class="text-center py-5">
+                <i class="bi bi-search display-3 text-secondary"></i>
+                <h3 class="mt-3">
+                    No encontramos ese título
+                </h3>
+                <p class="text-secondary">
+                    Intenta con otra búsqueda.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const categories = [
+        "Yuri",
+        "Yaoi",
+        "Infantiles",
+        "Ficción",
+        "Comics"
+    ];
+
+
+    categories.forEach(categoryName => {
+
+        const categoryBooks =
+            filtered.filter(
+                book => book.category === categoryName
+            );
+
+        if (categoryBooks.length === 0)
+            return;
+
+
+        const section =
+            document.createElement("section");
+
+        section.id =
+            categoryName
+            .toLowerCase()
+            .replace("ó","o");
+
+
+        section.className =
+            "mb-5";
+
+
+        section.innerHTML = `
+            <h3 class="category-title">
+                ${categoryName}
+            </h3>
+
+            <div class="row g-4">
+                ${categoryBooks.map(createCard).join("")}
+            </div>
+        `;
+
+
+        container.appendChild(section);
+
+    });
+
+}
+
+
+/* ============================================================
+   TARJETA
+============================================================ */
+
+function createCard(book) {
+
+    return `
+
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+            <div class="book-card">
+
+                <div class="book-image-container">
+
+                    <img
+                        src="${book.image}"
+                        class="book-image"
+                        alt="${book.title}"
+                        loading="lazy"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x850/151515/d4af37?text=${encodeURIComponent(book.title)}';"
+                    >
+
+                    ${
+                        book.new
+                        ?
+                        `<span class="badge badge-new">
+                            NUEVO
+                        </span>`
+                        :
+                        ""
+                    }
+
+                    <span class="badge discount">
+                        -${book.discount}%
+                    </span>
+
+                </div>
+
+
+                <div class="book-body">
+
+                    <div class="book-title mb-2">
+                        ${book.title}
+                    </div>
+
+                    <div class="book-author mb-3">
+                        ${book.author}
+                    </div>
+
+                    <div class="mb-3">
+
+                        <span class="old-price me-2">
+                            S/ ${book.price.toFixed(2)}
+                        </span>
+
+                        <span class="price">
+                            S/ ${book.finalPrice.toFixed(2)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="d-grid gap-2">
+
+                        <button
+                            class="btn btn-outline-light"
+                            onclick="showDetails(${book.id})">
+
+                            <i class="bi bi-info-circle me-1"></i>
+                            Ver detalles
+
+                        </button>
+
+
+                        <button
+                            class="btn btn-gold"
+                            onclick="addToCart(${book.id})">
+
+                            <i class="bi bi-cart-plus me-1"></i>
+                            Añadir al carrito
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* ============================================================
+   DETALLES
+============================================================ */
+
+function showDetails(id) {
+
+    const book =
+        books.find(
+            item => item.id === id
+        );
+
+    if (!book)
+        return;
+
+
+    currentModalProduct = book;
+
+
+    document.getElementById("modalTitle")
+        .textContent = book.title;
+
+    document.getElementById("modalImage")
+        .src = book.image;
+
+    document.getElementById("modalImage")
+        .alt = book.title;
+
+    document.getElementById("modalPlot")
+        .textContent = book.plot;
+
+    document.getElementById("modalAuthor")
+        .textContent = book.author;
+
+    document.getElementById("modalLanguages")
+        .textContent = book.languages;
+
+    document.getElementById("modalDimensions")
+        .textContent = book.dimensions;
+
+    document.getElementById("modalISBN")
+        .textContent = book.isbn;
+
+    document.getElementById("modalFormat")
+        .textContent = book.format;
+
+
+    new bootstrap.Modal(
+        document.getElementById("productModal")
+    ).show();
+
+}
+
+
+/* ============================================================
+   CARRITO
+============================================================ */
+
+function addToCart(id) {
+
+    const book =
+        books.find(
+            item => item.id === id
+        );
+
+    if (!book)
+        return;
+
+
+    const existing =
+        cart.find(
+            item => item.id === id
+        );
+
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+            id: book.id,
+            quantity: 1
+        });
+
+    }
+
+
+    updateCart();
+
+}
+
+
+function updateCart() {
+
+    const container =
+        document.getElementById("cartItems");
+
+    const count =
+        document.getElementById("cartCount");
+
+    const total =
+        document.getElementById("cartTotal");
+
+
+    let totalItems = 0;
+    let totalPrice = 0;
+
+
+    if (cart.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="text-center py-5">
+
+                <i class="bi bi-cart-x display-3 text-secondary"></i>
+
+                <p class="text-secondary mt-3">
+                    Tu carrito está vacío.
+                </p>
+
+            </div>
+
+        `;
+
+    } else {
+
+        container.innerHTML = "";
+
+
+        cart.forEach(item => {
+
+            const book =
+                books.find(
+                    b => b.id === item.id
+                );
+
+            if (!book)
+                return;
+
+
+            const subtotal =
+                book.finalPrice *
+                item.quantity;
+
+
+            totalItems +=
+                item.quantity;
+
+
+            totalPrice +=
+                subtotal;
+
+
+            container.innerHTML += `
+
+                <div class="cart-item">
+
+                    <div class="d-flex gap-3">
+
+                        <img
+                            src="${book.image}"
+                            style="
+                                width:65px;
+                                height:85px;
+                                object-fit:cover;
+                                border-radius:8px;
+                            "
+                            alt="${book.title}"
+                            onerror="this.onerror=null;this.src='https://placehold.co/100x140/151515/d4af37?text=Libro';"
+                        >
+
+                        <div class="flex-grow-1">
+
+                            <strong>
+                                ${book.title}
+                            </strong>
+
+                            <div class="text-secondary small">
+                                S/ ${book.finalPrice.toFixed(2)}
+                            </div>
+
+                            <div class="d-flex align-items-center gap-2 mt-2">
+
+                                <button
+                                    class="btn btn-sm btn-outline-light"
+                                    onclick="changeQuantity(${book.id}, -1)">
+                                    −
+                                </button>
+
+                                <span>
+                                    ${item.quantity}
+                                </span>
+
+                                <button
+                                    class="btn btn-sm btn-outline-light"
+                                    onclick="changeQuantity(${book.id}, 1)">
+                                    +
+                                </button>
+
+                                <button
+                                    class="btn btn-sm btn-outline-danger ms-auto"
+                                    onclick="removeFromCart(${book.id})">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    count.textContent =
+        totalItems;
+
+    total.textContent =
+        `S/ ${totalPrice.toFixed(2)}`;
+
+}
+
+
+function changeQuantity(id, amount) {
+
+    const item =
+        cart.find(
+            product => product.id === id
+        );
+
+    if (!item)
+        return;
+
+
+    item.quantity += amount;
+
+
+    if (item.quantity <= 0) {
+
+        cart =
+            cart.filter(
+                product => product.id !== id
+            );
+
+    }
+
+
+    updateCart();
+
+}
+
+
+function removeFromCart(id) {
+
+    cart =
+        cart.filter(
+            item => item.id !== id
+        );
+
+    updateCart();
+
+}
+
+
+function clearCart() {
+
+    cart = [];
+
+    updateCart();
+
+}
+
+
+/* ============================================================
+   CHECKOUT
+============================================================ */
+
+document
+.getElementById("checkoutBtn")
+.addEventListener("click", function() {
+
+    if (cart.length === 0) {
+
+        alert(
+            "Tu carrito está vacío."
+        );
+
+        return;
+    }
+
+
+    alert(
+        "¡Perfecto! Tu pedido ha sido preparado.\n\n" +
+        "Aquí termina la demostración de compra."
+    );
+
+});
+
+
+/* ============================================================
+   EVENTOS
+============================================================ */
+
+document
+.getElementById("searchInput")
+.addEventListener(
+    "input",
+    renderCatalog
+);
+
+
+document
+.getElementById("categoryFilter")
+.addEventListener(
+    "change",
+    renderCatalog
+);
+
+
+document
+.getElementById("sortFilter")
+.addEventListener(
+    "change",
+    renderCatalog
+);
+
+
+document
+.getElementById("resetFilters")
+.addEventListener(
+    "click",
+    function() {
+
+        document.getElementById("searchInput")
+            .value = "";
+
+        document.getElementById("categoryFilter")
+            .value = "all";
+
+        document.getElementById("sortFilter")
+            .value = "default";
+
+        renderCatalog();
+
+    }
+);
+
+
+document
+.getElementById("clearCart")
+.addEventListener(
+    "click",
+    clearCart
+);
+
+
+document
+.getElementById("modalAddButton")
+.addEventListener(
+    "click",
+    function() {
+
+        if (currentModalProduct) {
+
+            addToCart(
+                currentModalProduct.id
+            );
+
+            bootstrap.Modal
+                .getInstance(
+                    document.getElementById("productModal")
+                )
+                .hide();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   INICIO
+============================================================ */
+
+renderCatalog();
+
+updateCart();
+
+</script>
+
+</body>
+</html>
